@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Clip Forge"
+description = "A dark, modern workspace for turning raw footage into polished short-form video projects, with a focused landing page, login flow, dashboard, project creation, and uploads."
+version = "1.0.0"
+id = "artifacts/clip-forge"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24945
+
+[services.development]
+run = "pnpm --filter @workspace/clip-forge run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/clip-forge", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/clip-forge/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24945"
+BASE_PATH = "/"
